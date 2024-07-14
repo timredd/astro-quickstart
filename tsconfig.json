@@ -1,29 +1,28 @@
 {
-  "extends": "astro/tsconfigs/strictest",
+  "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    // Enable stricter transpilation for better output.
+    "strict": true,
     "isolatedModules": true,
-    // Check import types
     "verbatimModuleSyntax": true,
+    "baseUrl": ".",
     "types": [
-      "astro/client"
+      "astro/client",
+      "@cloudflare/workers-types"
     ],
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    },
     "plugins": [
       {
         "name": "@astrojs/ts-plugin"
-      },
+      }
     ],
-    "baseUrl": ".",
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ],
-    },
+    "jsx": "preserve",
+    "jsxImportSource": "solid-js"
   },
-  "include": [
-    "./src/**/*",
-  ],
   "exclude": [
     "node_modules"
-  ],
+  ]
 }
