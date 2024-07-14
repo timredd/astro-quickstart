@@ -19,25 +19,10 @@
     "upgrade": "pnpm dlx @astrojs/upgrade",
     "lint": "prettier --check \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\"",
     "lint:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,md,mdx,astro}\" && eslint --fix \"**/*.{js,ts,jsx,tsx,astro}\"",
-    "lint:css": "stylelint \"**/*.{css,scss}\"",
-    "etest": "playwright test",
-    "etest:report": "playwright show-report",
-    "etest:ui": "playwright test --ui",
-    "etest:codegen": "playwright codegen",
-    "etest:debug": "playwright test --debug",
-    "etest:chromium": "playwright test --project=chromium",
-    "etest:firefox": "playwright test --project=firefox",
-    "etest:webkit": "playwright test --project=webkit",
     "test": "vitest",
     "types": "types:check",
     "types:check": "tsc --noEmit",
     "types:build": "tsc --noEmit --pretty"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,md,mdx,astro}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
   },
   "dependencies": {
     "@astrojs/check": "^0.8.1",
@@ -64,8 +49,6 @@
     "eslint-plugin-astro": "^1.2.3",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^5.0.1",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.0",
     "prettier": "^3.1.1",
     "prettier-plugin-astro": "^0.14.0",
     "prettier-plugin-tailwindcss": "^0.6.5",
