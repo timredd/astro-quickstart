@@ -3,7 +3,12 @@
 ---
 
 <div
-  class="fixed bottom-5 left-5 z-50 flex gap-x-2 px-2.5 rounded-full bg-black py-1 font-mono font-light text-white text-xs items-center align-middle text-center"
+  class:list={[
+    "fixed bottom-5 left-5 z-50 flex gap-x-2 px-2.5 py-1",
+    "items-center align-middle text-center",
+    "bg-black text-white rounded-full font-mono font-light text-xs", 
+    "animate-out duration-400 opacity-100 hover:opacity-0 transition-opacity"
+  ]}
 >
   <p class="max-sm:block hidden">sm</p>
   <p class="sm:max-md:block hidden">md</p>
