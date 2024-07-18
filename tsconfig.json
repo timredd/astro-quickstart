@@ -12,6 +12,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "@api": [
+        "src/api/[...path].ts"
       ]
     },
     "plugins": [
