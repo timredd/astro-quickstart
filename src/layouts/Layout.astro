@@ -3,42 +3,83 @@ import { ViewTransitions } from "astro:transitions";
 import Nav from "@/components/nav.astro";
 import ScreenSize from "@/components/screen-size.astro";
 
-import "../styles/globals.css";
+import "@/styles/globals.css";
 
 interface Props {
   title: string;
   description: string;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+let canonicalURL: URL;
+try {
+  canonicalURL = new URL(Astro.url.pathname, Astro.site);
+} catch (err) {
+  console.error(`Failed to create canonical URL: ${(err as Error).message}`);
+  canonicalURL = Astro.url;
+}
 
 const { title, description } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en" class="">
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index, follow" />
     <meta name="googlebot" content="index, follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="canonical" href={canonicalURL} />
     <meta name="title" content={title} />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
     <title>{title}</title>
     <ViewTransitions fallback="swap" />
   </head>
-  <body class="min-h-screen font-sans antialiased">
-    <div id="app" class="flex h-dvh flex-col">
-      <Nav class="border-b border-muted-foreground" />
-      <main
-        class="flex isolate grow flex-col gap-y-6 self-center py-6 lg:max-w-6xl lg:gap-y-12 min-w-full"
-      >
+  <body class="font-sans antialiased">
+    <div id="app" class="flex flex-col">
+      <Nav class="border-b border-border" />
+      <main class="flex isolate grow flex-col gap-y-6 self-center py-6 lg:max-w-6xl lg:gap-y-12 min-w-full">
         <slot />
-        <ScreenSize/>
       </main>
+      <ScreenSize />
     </div>
   </body>
 </html>
+
+
+<script is:inline>
+  function setDarkMode(document) {
+    const getThemePreference = () => {
+      if (
+        typeof localStorage !== 'undefined' &&
+        localStorage.getItem('theme')
+      ) {
+        return localStorage.getItem('theme');
+      }
+      return window.matchMedia('(prefers-color-scheme: dark)').matches
+        ? 'dark'
+        : 'theme-light';
+    };
+    const isDark = getThemePreference() === 'dark';
+    document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
+
+    if (typeof localStorage !== 'undefined') {
+      const observer = new MutationObserver(() => {
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.setItem('theme', isDark ? 'dark' : 'theme-light');
+      });
+      observer.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+    }
+  }
+
+  setDarkMode(document);
+
+  document.addEventListener('astro:before-swap', (ev) => {
+    // Pass the incoming document to set the theme on it
+    setDarkMode(ev.newDocument);
+  });
+</script>
 

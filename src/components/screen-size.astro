@@ -19,8 +19,8 @@
   <span id="dimensions" class="font-mono">000x000</span>
 </div>
 
-<script>
-  function updateDimensions(): void {
+<script is:inline>
+  function updateDimensions() {
     const dimensions = document.getElementById("dimensions");
     if (!dimensions) {
       console.error("Span element not found");
