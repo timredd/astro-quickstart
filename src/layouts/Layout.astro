@@ -21,8 +21,15 @@ try {
 const { title, description } = Astro.props;
 ---
 
+<script is:inline>
+  if (typeof localStorage !== 'undefined') {
+    const theme = localStorage.getItem('theme');
+    document.documentElement.classList.add(theme === 'dark' ? 'dark' : 'light');
+  }
+</script>
+
 <!doctype html>
-<html lang="en" class="">
+<html lang="en" class="h-full">
   <head>
     <meta charset="utf-8" />
     <meta name="robots" content="index, follow" />
@@ -35,51 +42,13 @@ const { title, description } = Astro.props;
     <title>{title}</title>
     <ViewTransitions fallback="swap" />
   </head>
-  <body class="font-sans antialiased">
-    <div id="app" class="flex flex-col">
+  <body class="font-sans antialiased h-full">
+    <div id="app" class="flex flex-col h-svh">
       <Nav class="border-b border-border" />
-      <main class="flex isolate grow flex-col gap-y-6 self-center py-6 lg:max-w-6xl lg:gap-y-12 min-w-full">
+      <main class="flex flex-col grow gap-y-6 py-6 lg:max-w-6xl lg:gap-y-12 min-w-full">
         <slot />
       </main>
       <ScreenSize />
     </div>
   </body>
 </html>
-
-
-<script is:inline>
-  function setDarkMode(document) {
-    const getThemePreference = () => {
-      if (
-        typeof localStorage !== 'undefined' &&
-        localStorage.getItem('theme')
-      ) {
-        return localStorage.getItem('theme');
-      }
-      return window.matchMedia('(prefers-color-scheme: dark)').matches
-        ? 'dark'
-        : 'theme-light';
-    };
-    const isDark = getThemePreference() === 'dark';
-    document.documentElement.classList[isDark ? 'add' : 'remove']('dark');
-
-    if (typeof localStorage !== 'undefined') {
-      const observer = new MutationObserver(() => {
-        const isDark = document.documentElement.classList.contains('dark');
-        localStorage.setItem('theme', isDark ? 'dark' : 'theme-light');
-      });
-      observer.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class'],
-      });
-    }
-  }
-
-  setDarkMode(document);
-
-  document.addEventListener('astro:before-swap', (ev) => {
-    // Pass the incoming document to set the theme on it
-    setDarkMode(ev.newDocument);
-  });
-</script>
-

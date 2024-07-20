@@ -2,7 +2,7 @@ import type { Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
-  darkMode: ["class", '[data-kb-theme="dark"]'],
+  darkMode: ["class"],
   content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   theme: {
     extend: {
