@@ -6,27 +6,49 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LaptopIcon, MoonIcon, SunIcon } from "lucide-solid";
-import { createEffect, createSignal } from "solid-js";
+import { createEffect, createSignal, mergeProps, on } from "solid-js";
 
-export function ThemeToggle() {
-  const isDarkMode =
-    document.documentElement.classList.contains("dark") ||
-    document.documentElement.hasAttribute("data-kb-theme");
+type Theme = "light" | "dark" | "system";
 
-  const [theme, setTheme] = createSignal<"light" | "dark" | "system">("light");
-  setTheme(isDarkMode ? "dark" : "light");
+const isTheme = (t: string | null): t is Theme => {
+  return t === "light" || t === "dark" || t === "system";
+};
 
-  createEffect(() => {
-    const isDark =
-      theme() === "dark" ||
-      (theme() === "system" &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches);
-    document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-    document.documentElement.setAttribute(
-      "data-kb-theme",
-      isDark ? "dark" : "light",
-    );
-  });
+function getSystemTheme() {
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}
+
+function getCachedTheme() {
+  const cachedTheme = localStorage.getItem("theme");
+  return isTheme(cachedTheme) ? cachedTheme : undefined;
+}
+
+type ThemeToggleProps = {
+  defaultTheme?: Theme;
+  storageKey?: string;
+};
+
+const defaultProps = {
+  defaultTheme: "system",
+  storageKey: "theme",
+} satisfies ThemeToggleProps;
+
+export function ThemeToggle(props: ThemeToggleProps) {
+  const mergedProps = mergeProps(props, defaultProps);
+  const initialTheme = () => getCachedTheme() || mergedProps.defaultTheme;
+  const [theme, setTheme] = createSignal(initialTheme());
+
+  createEffect(
+    on(theme, (theme) => {
+      localStorage.setItem(mergedProps.storageKey, theme);
+
+      const root = document.documentElement;
+      root.classList.remove("light", "dark");
+      root.classList.add(theme === "system" ? getSystemTheme() : theme);
+    }),
+  );
 
   return (
     <DropdownMenu>
@@ -34,10 +56,10 @@ export function ThemeToggle() {
         as={Button}
         variant="ghost"
         size="sm"
-        class="w-9 px-0"
+        class="w-8 px-0"
       >
-        <SunIcon class="size-6 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-        <MoonIcon class="absolute size-6 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+        <SunIcon class="size-5 rotate-0 scale-100 transition-transform dark:-rotate-[360deg] dark:scale-0 duration-500" />
+        <MoonIcon class="absolute size-5 rotate-[360deg] scale-0 transition-transform dark:rotate-0 dark:scale-100 duration-500" />
         <span class="sr-only">Toggle theme</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
