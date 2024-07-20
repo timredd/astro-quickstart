@@ -5,9 +5,9 @@ import solidJs from "@astrojs/solid-js";
 import { passthroughImageService } from "astro/config";
 
 export default defineConfig({
-  // site: "http://<QUICKSTART>.com",
+  site: "https://astro.build/config", // TODO: update
   output: "server",
-  prefetch: true,
+  // prefetch: true,
   integrations: [solidJs(), tailwind({ applyBaseStyles: false })],
   image: { service: passthroughImageService() },
   adapter: cloudflare({
@@ -27,7 +27,16 @@ export default defineConfig({
           access: "public",
           default: 4321,
         }),
-        API_SECRET: envField.string({ context: "server", access: "secret" }),
+        TURSO_DATABASE_URL: envField.string({
+          context: "server",
+          access: "secret",
+          default: import.meta.env.DEV ? "http://127.0.0.1:8080" : undefined,
+        }),
+        TURSO_AUTH_TOKEN: envField.string({
+          context: "server",
+          access: "secret",
+          default: import.meta.env.DEV ? "" : undefined,
+        }),
       },
     },
   },

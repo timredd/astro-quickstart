@@ -27,14 +27,19 @@
     "@astrojs/tailwind": "^5.1.0",
     "@astrojs/ts-plugin": "^1.9.0",
     "@astropub/icons": "^0.2.0",
+    "@hono/valibot-validator": "^0.3.0",
     "@kobalte/core": "^0.13.3",
+    "@libsql/client": "^0.7.0",
     "astro": "^4.11.5",
     "astro-robots-txt": "^1.0.0",
     "class-variance-authority": "^0.7.0",
+    "drizzle-orm": "^0.32.0",
     "hono": "^4.5.0",
     "lucide-solid": "^0.408.0",
+    "nanoid": "^5.0.7",
     "solid-js": "^1.8.18",
-    "ts-pattern": "^5.2.0"
+    "ts-pattern": "^5.2.0",
+    "valibot": "^0.36.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.3",
@@ -42,6 +47,7 @@
     "@kobalte/tailwindcss": "^0.9.0",
     "@types/node": "^20.10.4",
     "clsx": "^2.1.1",
+    "drizzle-kit": "^0.23.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss": "^3.4.4",
     "tailwindcss-animate": "^1.0.7",
