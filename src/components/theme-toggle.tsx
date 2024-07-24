@@ -58,8 +58,8 @@ export function ThemeToggle(props: ThemeToggleProps) {
         size="sm"
         class="w-8 px-0"
       >
-        <SunIcon class="size-5 rotate-0 scale-100 transition-transform dark:-rotate-[360deg] dark:scale-0 duration-500" />
-        <MoonIcon class="absolute size-5 rotate-[360deg] scale-0 transition-transform dark:rotate-0 dark:scale-100 duration-500" />
+        <SunIcon class="dark:-rotate-[360deg] size-5 rotate-0 scale-100 transition-transform duration-500 dark:scale-0" />
+        <MoonIcon class="absolute size-5 rotate-[360deg] scale-0 transition-transform duration-500 dark:rotate-0 dark:scale-100" />
         <span class="sr-only">Toggle theme</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
