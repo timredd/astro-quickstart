@@ -1,7 +1,7 @@
-import { defineConfig, envField } from "astro/config";
-import tailwind from "@astrojs/tailwind";
 import cloudflare from "@astrojs/cloudflare";
 import solidJs from "@astrojs/solid-js";
+import tailwind from "@astrojs/tailwind";
+import { defineConfig, envField } from "astro/config";
 import { passthroughImageService } from "astro/config";
 
 export default defineConfig({

@@ -8,43 +8,40 @@
     "rules": {
       "recommended": true,
       "nursery": {
-        "noDuplicateJsonKeys": "off",
-        "useImportRestrictions": "off",
         "useSortedClasses": "error"
       }
     },
-    "ignore": ["node_modules/**/*"]
+    "ignore": [
+      "node_modules"
+    ]
   },
   "formatter": {
     "enabled": true,
-    "ignore": ["node_modules/**/*"],
-    "include": ["*.astro"],
-    "formatWithErrors": false,
-    "indentWidth": 2,
+    "formatWithErrors": true,
     "indentStyle": "space",
-    "lineEnding": "lf",
-    "lineWidth": 100
+    "include": [
+      "*.astro",
+      "*.ts",
+      "*.tsx"
+    ],
+    "ignore": [
+      "node_modules"
+    ]
   },
   "organizeImports": {
     "enabled": true,
-    "ignore": ["node_modules/**/*"]
+    "ignore": [
+      "node_modules"
+    ]
   },
   "javascript": {
     "formatter": {
       "enabled": true,
-      "arrowParentheses": "always",
-      "bracketSameLine": false,
-      "bracketSpacing": true,
-      "indentWidth": 2,
-      "indentStyle": "space",
-      "jsxQuoteStyle": "double",
-      "lineEnding": "lf",
-      "lineWidth": 80,
-      "quoteProperties": "asNeeded",
-      "quoteStyle": "double",
-      "semicolons": "always"
+      "indentStyle": "space"
     },
-    "globals": ["Astro"],
+    "globals": [
+      "Astro"
+    ],
     "parser": {
       "unsafeParameterDecoratorsEnabled": true
     }
@@ -53,12 +50,10 @@
     "formatter": {
       "enabled": true,
       "indentWidth": 2,
-      "indentStyle": "space",
-      "lineEnding": "lf",
-      "lineWidth": 80
+      "indentStyle": "space"
     },
     "parser": {
-      "allowComments": false,
+      "allowComments": true,
       "allowTrailingCommas": false
     }
   }
